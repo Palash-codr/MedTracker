@@ -17,6 +17,23 @@ The app combines scheduled notifications, voice alerts, prescription scanning, a
 - 🌐 **Multilingual Support** — English, Hindi, and Telugu, where implemented.
 - 🤖 **AI-Powered Assistance** — Gemini API integration for supported features.
 
+## 📱 App Screenshots
+
+### Home Screen
+![MedTracker Home Screen](screenshots/home.jpeg)
+
+### Add Prescription
+![Add Prescription](screenshots/Add_prescription.jpeg)
+
+### Medicine Management
+![Medicine Management](screenshots/Medicine.jpeg)
+
+### Medicine Information
+![Medicine Information](screenshots/Med_info.jpeg)
+
+### Medication History
+![Medication History](screenshots/History.jpeg)
+
 ## 🛠️ Tech Stack
 
 - Kotlin
