@@ -16,3 +16,14 @@
 local.properties
 .env
 debug.keystore
+
+# Android build outputs
+**/build/
+
+# Environment and secret files
+.env.*
+!.env.example
+
+# Signing keys
+*.jks
+*.keystore

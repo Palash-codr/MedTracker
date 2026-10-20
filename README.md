@@ -1,22 +1,56 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 💊 MedTracker — Android Medication Reminder App
 
-# Run and deploy your AI Studio app
+MedTracker is an Android application designed to help users manage their medication schedules, receive timely reminders, and track their medication adherence.
 
-This contains everything you need to run your app locally.
+The app combines scheduled notifications, voice alerts, prescription scanning, and medicine tracking in one place.
 
-View your app in AI Studio: https://ai.studio/apps/08c03181-6c1f-4c44-b6af-8a73e14f538e
+## ✨ Features
 
-## Run Locally
+- 💊 **Medicine Management** — Add and manage medicines and their details.
+- 📸 **Prescription Scanning** — Capture or upload prescriptions for AI-assisted information extraction.
+- ⏰ **Custom Reminders** — Configure reminder times for individual medicines.
+- 🔊 **Voice Alerts** — Hear spoken medicine reminders.
+- ⏳ **Snooze Reminders** — Snooze an alert when needed.
+- ✅ **Dose Tracking** — Mark doses as Taken or Skipped, with Undo support.
+- 🔄 **Refill Alerts** — Track medicine quantities and refill needs.
+- 📊 **Adherence History** — Review medication activity over time.
+- 🌐 **Multilingual Support** — English, Hindi, and Telugu, where implemented.
+- 🤖 **AI-Powered Assistance** — Gemini API integration for supported features.
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+## 🛠️ Tech Stack
 
+- Kotlin
+- Android SDK
+- Jetpack Compose
+- Material 3
+- Android Notifications
+- Android TextToSpeech
+- Gemini API
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
-7. If you have already published your app in AI Studio, please [request upload key reset](https://support.google.com/googleplay/android-developer/answer/9842756#zippy=%2Crequest-an-upload-key-reset) in Google Play Console.
+## 🏗️ Project Status
+
+MedTracker is a personal Android development project. Features and compatibility should be verified on supported Android devices.
+
+## 🚀 Getting Started
+
+1. Clone this repository.
+2. Open the project in Android Studio.
+3. Allow Gradle to sync and download the required dependencies.
+4. Configure any required API credentials securely.
+5. Run the application on a compatible Android device or emulator.
+
+## 🔐 Security
+
+- Never commit API keys, passwords, signing keys, or other secrets.
+- Use a secure backend to protect Gemini API credentials in a production deployment.
+- Prescription details extracted by AI should be reviewed for accuracy.
+
+## ⚕️ Disclaimer
+
+MedTracker is intended to help organize medication schedules. It does not replace professional medical advice or instructions from a qualified healthcare professional.
+
+## 👨‍💻 Author
+
+**Palash Mahawar**
+
+[GitHub Profile](https://github.com/Palash-codr)
