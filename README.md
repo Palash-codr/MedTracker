@@ -19,21 +19,32 @@ The app combines scheduled notifications, voice alerts, prescription scanning, a
 
 ## 📱 App Screenshots
 
-### Home Screen
-![MedTracker Home Screen](screenshots/home.jpeg)
-
-### Add Prescription
-![Add Prescription](screenshots/Add_prescription.jpeg)
-
-### Medicine Management
-![Medicine Management](screenshots/Medicine.jpeg)
-
-### Medicine Information
-![Medicine Information](screenshots/Med_info.jpeg)
-
-### Medication History
-![Medication History](screenshots/History.jpeg)
-
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/home.jpeg" width="180" alt="Home Screen">
+      <br><b>Home</b>
+    </td>
+    <td align="center">
+      <img src="screenshots/Add_prescription.jpeg" width="180" alt="Add Prescription">
+      <br><b>Add Prescription</b>
+    </td>
+    <td align="center">
+      <img src="screenshots/Medicine.jpeg" width="180" alt="Medicine Management">
+      <br><b>Medicines</b>
+    </td>
+    <td align="center">
+      <img src="screenshots/Med_info.jpeg" width="180" alt="Medicine Information">
+      <br><b>Medicine Info</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/History.jpeg" width="180" alt="Medication History">
+      <br><b>History</b>
+    </td>
+  </tr>
+</table>
 ## 🛠️ Tech Stack
 
 - Kotlin
