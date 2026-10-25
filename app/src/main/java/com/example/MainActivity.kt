@@ -1,7 +1,6 @@
 package com.example
-
+import com.example.ui.screens.GeminiSettingsScreen
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -82,24 +81,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Feature 1: Support the device's available display refresh rate
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val display = display
-                display?.supportedModes?.maxByOrNull { it.refreshRate }?.let { mode ->
-                    window.attributes.preferredDisplayModeId = mode.modeId
-                }
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                @Suppress("DEPRECATION")
-                val display = windowManager.defaultDisplay
-                @Suppress("DEPRECATION")
-                display?.supportedModes?.maxByOrNull { it.refreshRate }?.let { mode ->
-                    window.attributes.preferredDisplayModeId = mode.modeId
-                }
-            }
-        } catch (_: Exception) {
-            // Fallback gracefully on devices without custom display modes
-        }
 
         setContent {
             val viewModel: MedTrackerViewModel = viewModel()
@@ -343,7 +324,17 @@ fun MedTrackerApp(viewModel: MedTrackerViewModel = viewModel()) {
         // Smooth restrained animated transition between screens
         AnimatedContent(
             targetState = currentTab,
-            transitionSpec = { fadeIn() togetherWith fadeOut() },
+            transitionSpec = {
+                fadeIn(
+                    animationSpec = androidx.compose.animation.core.tween(
+                        durationMillis = 150
+                    )
+                ) togetherWith fadeOut(
+                    animationSpec = androidx.compose.animation.core.tween(
+                        durationMillis = 100
+                    )
+                )
+            },
             label = "screen_tab_transition"
         ) { targetTab ->
             when (targetTab) {
@@ -417,7 +408,17 @@ fun MedTrackerApp(viewModel: MedTrackerViewModel = viewModel()) {
                         onSetSoundEnabled = { enabled -> viewModel.setSoundEnabled(enabled) },
                         onSetVoiceRemindersEnabled = { enabled -> viewModel.setVoiceRemindersEnabled(enabled) },
                         onTestVoiceReminder = { viewModel.testVoiceReminder() },
+                        onOpenGeminiSettings = { viewModel.navigateTo(ScreenTab.GEMINI_SETTINGS) },
                         onTestNotification = { viewModel.triggerTestNotification() },
+                        modifier = contentModifier
+
+                    )
+                }
+                ScreenTab.GEMINI_SETTINGS -> {
+                    GeminiSettingsScreen(
+                        onBack = {
+                            viewModel.navigateTo(ScreenTab.SETTINGS)
+                        },
                         modifier = contentModifier
                     )
                 }

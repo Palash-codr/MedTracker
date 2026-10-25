@@ -86,6 +86,12 @@ fun HomeScreen(
     val scheduledCount = todayDoses.size
     val takenCount = todayDoses.count { it.status.equals("TAKEN", ignoreCase = true) }
     val pendingCount = todayDoses.count { it.status.equals("PENDING", ignoreCase = true) }
+    val lowStockMedicines = remember(medicines) {
+        medicines.filter {
+            it.refillAlertEnabled &&
+                    it.currentQuantity <= it.lowStockThreshold
+        }
+    }
 
     // Group doses strictly by configured reminder time from saved records
     val groupedDosesByTime = remember(todayDoses) {
@@ -166,8 +172,7 @@ fun HomeScreen(
                 }
             }
 
-        // Feature 3: Medicine Refill Alert Card (if any medicine is at or below threshold)
-        val lowStockMedicines = medicines.filter { it.refillAlertEnabled && it.currentQuantity <= it.lowStockThreshold }
+
         if (lowStockMedicines.isNotEmpty()) {
             item {
                 Card(

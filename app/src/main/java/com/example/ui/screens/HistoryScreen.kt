@@ -75,28 +75,46 @@ fun HistoryScreen(
     var filterStatus by remember { mutableStateOf("ALL") }
 
     // Feature 5: Compute 7-day adherence for current day and preceding 6 calendar days
+
     val sevenDaySummaries = remember(doseHistory) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val displayFormat = SimpleDateFormat("EEE, MMM d", Locale.getDefault())
 
-        (0..6).map { daysAgo ->
+        // Calculate the date range first.
+        val dates = (0..6).map { daysAgo ->
             val cal = Calendar.getInstance().apply {
                 add(Calendar.DAY_OF_YEAR, -daysAgo)
             }
-            val dateStr = dateFormat.format(cal.time)
-            val dosesForDate = doseHistory.filter { it.scheduledDate == dateStr }
+            Triple(daysAgo, dateFormat.format(cal.time), cal.time)
+        }
+
+        // Group history records by date in one pass.
+        val historyByDate = doseHistory.groupBy { it.scheduledDate }
+
+        dates.map { (daysAgo, dateStr, date) ->
+            val dosesForDate = historyByDate[dateStr].orEmpty()
+
             val total = dosesForDate.size
-            val taken = dosesForDate.count { it.status.equals("TAKEN", ignoreCase = true) }
-            val skipped = dosesForDate.count { it.status.equals("SKIPPED", ignoreCase = true) }
-            val pending = dosesForDate.count {
-                !it.status.equals("TAKEN", ignoreCase = true) && !it.status.equals("SKIPPED", ignoreCase = true)
+            val taken = dosesForDate.count {
+                it.status.equals("TAKEN", ignoreCase = true)
             }
-            val percent = if (total > 0) ((taken.toDouble() / total.toDouble()) * 100.0).roundToInt() else null
+            val skipped = dosesForDate.count {
+                it.status.equals("SKIPPED", ignoreCase = true)
+            }
+            val pending = total - taken - skipped
+
+            val percent = if (total > 0) {
+                ((taken.toDouble() / total.toDouble()) * 100.0).roundToInt()
+            } else {
+                null
+            }
+
             val label = when (daysAgo) {
-                0 -> "Today (${displayFormat.format(cal.time)})"
-                1 -> "Yesterday (${displayFormat.format(cal.time)})"
-                else -> displayFormat.format(cal.time)
+                0 -> "Today (${displayFormat.format(date)})"
+                1 -> "Yesterday (${displayFormat.format(date)})"
+                else -> displayFormat.format(date)
             }
+
             DayAdherence(
                 dateString = dateStr,
                 displayLabel = label,
@@ -109,6 +127,8 @@ fun HistoryScreen(
             )
         }
     }
+
+
 
     val totalSevenDayScheduled = sevenDaySummaries.sumOf { it.totalScheduled }
     val totalSevenDayTaken = sevenDaySummaries.sumOf { it.takenDoses }
@@ -483,9 +503,13 @@ private fun HistoryItemCard(dose: DoseRecordEntity) {
                         )
                     )
                     dose.actionTimestamp?.let { ts ->
-                        val sdf = SimpleDateFormat("MMM d, yyyy • h:mm a", Locale.getDefault())
+                        val timestampText = remember(ts) {
+                            SimpleDateFormat("MMM d, yyyy • h:mm a", Locale.getDefault())
+                                .format(Date(ts))
+                        }
+
                         Text(
-                            text = sdf.format(Date(ts)),
+                            text = timestampText,
                             style = MaterialTheme.typography.bodySmall.copy(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 11.sp
